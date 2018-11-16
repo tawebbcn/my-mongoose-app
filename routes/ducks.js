@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
 
 const Duck = require('../models/duck');
 
@@ -18,10 +19,24 @@ router.get('/create', (req, res, next) => {
   res.render('ducks/create-duck', { title: 'Duck Express' });
 });
 
+router.get('/people', (req, res, next) => {
+  User.find()
+    .populate('ducks')
+    .then((result) => {
+      res.render('ducks/peoples-ducks', { users: result });
+    })
+    .catch(next);
+});
+
 // Receive the duck post
 router.post('/', (req, res, next) => {
-  // C in CRUD
-  Duck.create(req.body)
+  const { name, year, type } = req.body;
+
+  const newDuck = new Duck({ name, year, type });
+  const updateUserPromise = User.findOneAndUpdate({ name: req.body.ownerName }, { $push: { ducks: newDuck._id } });
+  const saveDuckPromise = newDuck.save();
+
+  Promise.all([updateUserPromise, saveDuckPromise])
     .then((result) => {
       console.log('Result:' + result);
       res.redirect('/ducks');

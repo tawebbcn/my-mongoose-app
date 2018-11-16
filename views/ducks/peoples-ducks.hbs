@@ -1,0 +1,21 @@
+<h1>
+  All peoples ducks
+</h1>
+
+<ul>
+  {{#each users}}
+  <li>
+    <h2>{{this.name}}</h2>
+    <ul>
+      {{#each this.ducks}}
+        <h3>My ducks</h3>
+        <li>
+          <p>id: {{this._id}}</p>
+          <p>name: {{this.name}}</p>
+          <p>type: {{this.type}}</p>
+        </li>
+      {{/each}}
+    </ul>
+  </li>
+  {{/each}}
+</ul>
