@@ -1,0 +1,23 @@
+<h1>Edit a duck</h1>
+
+<form method="POST" action="/ducks/{{duck._id}}/edit">
+
+  <div class="field" >
+    <label>Duck Name</label>
+    <input type="text" name="name" value="{{duck.name}}"/>
+  </div>
+
+  <div class="field" >
+    <label>Duck Year</label>
+    <input type="number" name="year" value="{{duck.year}}" />
+  </div>
+
+  <div class="field" >
+    <label>typeof Duck</label>
+    <input type="text" name="type" value="{{duck.type}}" />
+  </div>
+
+  <div class="field submit">
+    <button type="submit">Save an edited duck</button>
+  </div>
+</form>
